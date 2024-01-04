@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV Generator</title>
+    <script>
+    function generateCSV() {
+        document.getElementById('downloadButton').style.display = 'none';
+
+        fetch('/generate-csv')
+        .then(response => {
+            if (response.ok) {
+                document.getElementById('downloadButton').style.display = 'block';
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+    function handleDownload() {
+        document.getElementById('downloadButton').style.display = 'none';
+
+        window.location.href = '/download-csv';
+    }
+    </script>
+
+</head>
+<body>
+    <button onclick="generateCSV()">Generate CSV</button>
+    <button id="downloadButton" style="display:none;" onclick="handleDownload()">Download CSV</button>
+</body>
+</html>

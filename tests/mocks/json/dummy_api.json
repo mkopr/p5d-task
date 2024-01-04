@@ -1,0 +1,27 @@
+{
+  "items": [
+    {
+      "hash": "project123hash",
+      "name": "Project ABC",
+      "data": {
+        "items": [
+          {
+            "className": "Floor",
+            "items": [
+              {"className": "Room"},
+              {"className": "Room"}
+            ]
+          },
+          {
+            "className": "Floor",
+            "items": [
+              {"className": "Room"},
+              {"className": "Room"},
+              {"className": "Room"}
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
