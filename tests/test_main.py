@@ -56,7 +56,7 @@ async def test_generate_csv(mocker):
 
 @pytest.mark.asyncio
 async def test_download_csv():
-    with patch("app.config.CSV_FILE_PATH", new=mock_csv_path):
+    with patch("app.main.CSV_FILE_PATH", new=mock_csv_path):
         async with AsyncClient(app=app, base_url="http://test") as ac:
             response = await ac.get("/download-csv")
 
