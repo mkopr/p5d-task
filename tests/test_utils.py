@@ -2,6 +2,8 @@ import asyncio
 from unittest.mock import MagicMock
 
 import pytest
+from pytest_mock import MockFixture
+
 
 from app.csv_handler import CSVHandler
 from app.fetchers import AsyncHTMLDataFetcher, AsyncJSONDataFetcher
@@ -22,6 +24,9 @@ from tests.mock_data_helpers import (
 mock_html_content = read_mock_data("html", "dummy_page.html")
 mock_json_content = read_mock_data("json", "dummy_api.json")
 
+# Reset global variables before test
+global concurrent_tasks, max_concurrent_reached
+
 
 @pytest.mark.parametrize(
     "url",
@@ -32,19 +37,19 @@ mock_json_content = read_mock_data("json", "dummy_api.json")
         "http://localhost:8000",
     ],
 )
-def test_is_valid_url_with_valid_urls(url):
+def test_is_valid_url_with_valid_urls(url: str):
     assert is_valid_url(url)
 
 
 @pytest.mark.parametrize(
     "url", ["example", "http://", "www.google.com", "12345", "http//com", ""]
 )
-def test_is_valid_url_with_invalid_urls(url):
+def test_is_valid_url_with_invalid_urls(url: str):
     assert not is_valid_url(url)
 
 
 @pytest.mark.asyncio
-async def test_max_concurrent_tasks(mocker):
+async def test_max_concurrent_tasks(mocker: MockFixture):
     """
     Test to verify that the maximum number of concurrent tasks in
     fetch_data_and_save_in_parallel function does not exceed the specified limit.
@@ -55,9 +60,6 @@ async def test_max_concurrent_tasks(mocker):
         "http://example.com/3",
     ]
 
-    # Reset global variables before each test
-    global concurrent_tasks, max_concurrent_reached
-    concurrent_tasks = 0
     max_concurrent_reached = False
 
     mocker.patch("app.utils.aiohttp.ClientSession", MagicMock())
@@ -71,7 +73,9 @@ async def test_max_concurrent_tasks(mocker):
 
 
 @pytest.mark.asyncio
-async def test_fetch_and_parse_project_data_to_csv_valid_url(mocker):
+async def test_fetch_and_parse_project_data_to_csv_valid_url(
+    mocker: MockFixture,
+):
     url = "http://valid-url.com"
     semaphore = asyncio.Semaphore(1)
     session_mock = mocker.MagicMock()
@@ -112,7 +116,9 @@ async def test_fetch_and_parse_project_data_to_csv_valid_url(mocker):
 
 
 @pytest.mark.asyncio
-async def test_fetch_and_parse_project_data_to_csv_invalid_url(mocker):
+async def test_fetch_and_parse_project_data_to_csv_invalid_url(
+    mocker: MockFixture,
+):
     url = "http://invalid-url.com"
     semaphore = asyncio.Semaphore(1)
     session_mock = mocker.MagicMock()
@@ -145,7 +151,9 @@ async def test_fetch_and_parse_project_data_to_csv_invalid_url(mocker):
 
 
 @pytest.mark.asyncio
-async def test_fetch_and_parse_project_data_to_csv_parsing_error(mocker):
+async def test_fetch_and_parse_project_data_to_csv_parsing_error(
+    mocker: MockFixture,
+):
     url = "http://valid-url-with-parsing-error.com"
     semaphore = asyncio.Semaphore(1)
     session_mock = mocker.MagicMock()

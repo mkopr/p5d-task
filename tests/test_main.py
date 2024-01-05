@@ -6,6 +6,7 @@ from lxml import html
 
 from app.main import app
 from tests.mock_data_helpers import get_mock_data_file_path, read_mock_data
+from pytest_mock import MockFixture
 
 # Preparing mock data
 mock_html_content = read_mock_data("html", "dummy_page.html")
@@ -33,7 +34,7 @@ async def test_main_page():
 
 
 @pytest.mark.asyncio
-async def test_generate_csv(mocker):
+async def test_generate_csv(mocker: MockFixture):
     mocker.patch(
         "app.fetchers.AsyncHTMLDataFetcher.fetch_data",
         new_callable=AsyncMock,
