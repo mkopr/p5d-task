@@ -2,15 +2,9 @@ API_COMPOSE=-f ./docker-compose.yml
 
 lint:
 	@echo "Linting & fixing locally changed files"
-	@if git rev-parse --verify HEAD >/dev/null 2>&1; then \
-		git diff HEAD --name-only | grep -i ".py$$" | xargs black --config=pyproject.toml; \
-		git diff HEAD --name-only | grep -i ".py$$" | xargs flake8; \
-		git diff HEAD --name-only | grep -i ".py$$" | xargs mypy; \
-	else \
-		find . -name "*.py" | xargs black --config=pyproject.toml; \
-		find . -name "*.py" | xargs flake8; \
-		find . -name "*.py" | xargs mypy; \
-	fi
+	find . -name "*.py" | xargs black --config=pyproject.toml; \
+	find . -name "*.py" | xargs flake8; \
+	find . -name "*.py" | xargs mypy; \
 
 
 build: #build the project
