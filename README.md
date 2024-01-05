@@ -19,12 +19,15 @@ https://docs.docker.com/compose/install/
 
 ## Running the Application
 
-Use the following `make` commands to manage the application:
-
 quick command to build and start project with log view:  
 `make up-b && make logs`
 
-### Available commands:  
+Important: App uses port 8000 by default. If port 8000 is already in use, change the port in `docker-compose.yml` file.
+Application require internet connection to work properly.
+
+### Available commands  
+
+Use the following `make` commands to manage the application:
 - `make build`: Build the project.
 - `make up`: Start the project.
 - `make up-b`: Build and start the project.
@@ -47,13 +50,14 @@ Access the application at `http://0.0.0.0:8000/`.
 ## Configuration and Customization
 Configuration is done in `app/config.py` file
 
-### Configuration options:
+### Configuration options
 `MAX_CONCURRENT_TASKS`: Control the number of simultaneous requests.  
 `LIST_OF_PROJECTS`: Specify URLs for data extraction.  
 `CSV_FILE_NAME`, `CSV_FILE_FOLDER`: Define CSV file naming and storage location.  
 `PLANNER5D_API_PROJECT_URL`: Set the API URL for Planner 5D projects.  
 `PROJECT_ID_XPATH`: XPath for project ID extraction from HTML.  
 `MAIN_PAGE_HTML_PATH`: Path to the main HTML file.  
+`LOGGER_FORMAT`: Logging format.
 
 ## Linting and Code Formatting
 
@@ -86,7 +90,7 @@ The text file can be structured with one URL per line, allowing easy additions o
 
 2. Automated Floorplan Collection
 To further automate the process, integrating a web scraping tool like Selenium or BeautifulSoup can be very useful. 
-Specifically, the project can be enhanced to automatically scrape floorplan URLs from websites like Planner 5D Floorplans. 
+Specifically, the project can be enhanced to automatically scrape floorplan URLs from websites Planner 5D Floorplans. 
 This would involve writing a script that navigates the site, extracts the relevant URLs, and saves them, potentially into the aforementioned text file. 
 This feature would significantly reduce manual effort and streamline the process of gathering diverse floorplan designs for analysis or other purposes.
 
