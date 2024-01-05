@@ -17,7 +17,7 @@ class CSVHandler:
 
     _instance: Optional["CSVHandler"] = None
     is_closed: bool = False
-    file_path = ""
+    file_path: str = ""
 
     def __new__(cls, file_path: str) -> "CSVHandler":
         """
